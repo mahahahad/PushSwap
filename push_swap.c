@@ -6,7 +6,7 @@
 /*   By: maabdull <maabdull@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 13:07:13 by maabdull          #+#    #+#             */
-/*   Updated: 2023/12/09 16:22:53 by maabdull         ###   ########.fr       */
+/*   Updated: 2023/12/09 17:06:42 by maabdull         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,15 @@ void	print_arr(const char **arr, int len)
 	}
 }
 
+// Loop through each argument in the argument vector
+// If it contains a space, split it at that space
+// Add each string to an array
+// Loop through the array and convert each string to an int
+// Add this int to the stacks linked list
+/*
+According to Tanvir:
+STRJOIN everything into one string and then split it later
+*/
 int	main(int argc, char const *argv[])
 {
 	int	i;
