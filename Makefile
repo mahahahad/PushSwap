@@ -1,17 +1,22 @@
 NAME = push_swap
 UTILS = ft_putstr.c
 CFLAGS = -Wall -Werror -Wextra
+LIBFT = Libft/libft.a
 
-all :
-	cc $(CFLAGS) -c ft_putstr.c -o ft_putstr.o
-	cc $(CFLAGS) push_swap.c ft_putstr.o -o $(NAME)
+all : $(NAME)
 
-$(NAME) :
+$(NAME) : $(LIBFT)
+	cc $(CFLAGS) push_swap.c $< -o $(NAME)
+
+$(LIBFT) :
+	make -C Libft/
 
 clean :
-	@echo "clean rule"
+	@make clean -C Libft/
 
 fclean : clean
-	@echo "fclean rule"
+	@make fclean -C Libft/
 
 re : fclean all
+
+.PHONY : all $(NAME) $(LIBFT) clean fclean re
