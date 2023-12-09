@@ -42,17 +42,30 @@ STRJOIN everything into one string and then split it later
 int	main(int argc, char const *argv[])
 {
 	int	i;
+  char  *arguments;
+  char  **argument_list;
 
 	// int	*stack_values;
+  arguments = malloc(1);
 	i = 1;
 	if (argc == 1)
 		return (0);
 	while (i < argc)
 	{
-		if (ft_strchr(argv[i], ' '))
-			ft_split(argv[i], ' ');
-		printf("%s\n", argv[i]);
+    // TODO: LEAKS
+    arguments = ft_strjoin(arguments, ft_strjoin(" ", argv[i]));
 		i++;
 	}
+  printf("%s\n", arguments);
+  argument_list = ft_split(arguments, ' ');
+  // Check duplicates and other things
+  int x;
+
+  x = 0;
+  while (argument_list[x])
+  {
+    puts(argument_list[x]);
+    x++;
+  }
 	return (0);
 }
