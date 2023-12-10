@@ -6,7 +6,7 @@
 /*   By: maabdull <maabdull@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 13:10:29 by maabdull          #+#    #+#             */
-/*   Updated: 2023/12/09 15:44:42 by maabdull         ###   ########.fr       */
+/*   Updated: 2023/12/10 16:33:43 by maabdull         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,10 @@
 # define PUSH_SWAP_H
 
 # include "./Libft/libft.h"
+# include <stdbool.h>
 # include <stdio.h>
 # include <unistd.h>
 
-void	ft_putstr(char *str);
+// void	ft_putstr(char *str);
 
 #endif

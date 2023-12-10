@@ -6,7 +6,7 @@
 /*   By: maabdull <maabdull@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 13:07:13 by maabdull          #+#    #+#             */
-/*   Updated: 2023/12/10 14:12:50 by maabdull         ###   ########.fr       */
+/*   Updated: 2023/12/10 17:00:38 by maabdull         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ void	print_arr(const char **arr, int len)
 }
 
 // Remove unnecessary values from the number such as leading zeros and signs
+// Return the extracted number or NULL if invalid number is passed
 static char	*extract_num(char *num)
 {
 	int		i;
@@ -48,15 +49,19 @@ static char	*extract_num(char *num)
 	{
 		if ((num[i] == '0' || num[i] == '+' || num[i] == '-') && !digit_found)
 			continue ;
+		if ((num[i] == '+' || num[i] == '-') && digit_found)
+			break ;
 		digit_found = 1;
 		val[j++] = num[i];
 	}
+	if (!digit_found)
+		return (NULL);
 	return (val);
 }
 
 // Checks if the provided number is greater than INT_MAX
 // Uses strcmp and strlen to check if the number is 10 characters long and the difference from strcmp is greater than 1
-static int	is_long(char *num)
+static bool	is_long(char *num)
 {
 	char	*max_int;
 	int		res;
@@ -68,13 +73,13 @@ static int	is_long(char *num)
 	res = ft_strcmp(num, max_int);
 	if ((res > 0 && ft_strlen(num) == 10) || (num[0] == '-'
 			&& ft_strlen(num) > 11) || (num[0] != '-' && ft_strlen(num) > 10))
-		return (1);
-	return (0);
+		return (true);
+	return (false);
 }
 
 // Loops through the (string) array and compares the provided (string) num.
 // If they are the same, return 1
-static int	is_duplicate_string(char *num, char **arg_list)
+static bool	is_duplicate_string(char *num, char **arg_list)
 {
 	int	i;
 	int	instances_found;
@@ -86,60 +91,66 @@ static int	is_duplicate_string(char *num, char **arg_list)
 		if (ft_strcmp(num, arg_list[i]) == 0)
 		{
 			if (instances_found >= 1)
-				return (1);
+				return (true);
 			else
 				instances_found++;
 		}
 		i++;
 	}
-	return (0);
+	return (false);
 }
 
-static int	is_digit_string(char *num)
+static bool	is_digit_string(const char *num)
 {
 	int	i;
 
-	if (!num)
-		return (1);
-	i = -1;
-	while (num[++i])
+	i = 0;
+	while (num[i])
 	{
-		if (ft_isdigit(num[i]) == 1)
-			return (1);
+		// printf("%c\n", num[i]);
+		if (ft_isdigit(num[i]) == 0)
+			return (false);
+		i++;
 	}
-	return (0);
+	return (true);
 }
 
 // static int	is_duplicate_num(int num, int *num_list)
 // {
 // }
 
-static void	extract_num_list(char **arg_list)
+static bool	extract_num_list(char **arg_list)
 {
 	int	i;
 
 	i = -1;
 	// TODO: Leaks
 	while (arg_list[++i])
+	{
 		arg_list[i] = extract_num(arg_list[i]);
+		if (arg_list[i] == NULL)
+			return (false);
+	}
+	return (true);
 }
 
 // Checks the arguments that are still in string format if they are valid and not duplicates
 // Makes it easier for passing to atoi
-int	check_args(char **argument_list)
+static bool	are_args_valid(char **argument_list)
 {
 	int	i;
 
 	i = 0;
-	extract_num_list(argument_list);
+	if (!extract_num_list(argument_list))
+		return (false);
 	while (argument_list[i])
 	{
 		if (is_long(argument_list[i]) || is_duplicate_string(argument_list[i],
 				argument_list) || !is_digit_string(argument_list[i]))
-			return (1);
+			return (false);
 		i++;
 	}
-	return (0);
+	return (true);
 }
 
 // Convert each (string) num in the (string) array passed to an integer
@@ -167,10 +178,10 @@ int	main(int argc, char const *argv[])
 	char	*arguments;
 	char	**argument_list;
 	int		x;
-	int		list_size;
+	int		*arr;
 
 	// int	*stack_values;
-	list_size = 0;
+	arr = NULL;
 	arguments = malloc(1);
 	i = 1;
 	if (argc == 1)
@@ -183,7 +194,7 @@ int	main(int argc, char const *argv[])
 	}
 	// printf("%s\n", arguments);
 	argument_list = ft_split(arguments, ' ');
-	if (check_args(argument_list))
+	if (!are_args_valid(argument_list))
 		return (ft_putstr_fd("Error\n", 2), 1);
 	x = -1;
 	convert_num_list(argument_list);
