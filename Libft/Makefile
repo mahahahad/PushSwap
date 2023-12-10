@@ -6,7 +6,7 @@
 #    By: maabdull <maabdull@student.42abudhabi.a    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/07/03 14:58:57 by maabdull          #+#    #+#              #
-#    Updated: 2023/07/24 16:03:03 by maabdull         ###   ########.fr        #
+#    Updated: 2023/12/10 11:52:19 by maabdull         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,11 +24,12 @@ all : $(NAME)
 
 $(NAME) : $(OBJS)
 	@ar rcs $(NAME) $^
-	@echo "Archive file created"
+	@echo "\nArchive file created"
 
 $(OBJ_DIR)%.o : %.c
 	@mkdir -p $(OBJ_DIR)
-	cc $(FLAGS) -c $< -o $@
+	@cc $(FLAGS) -c $< -o $@
+	@echo ".\c"
 
 test : re
 	cc $(FLAGS) $(NAME) main.c -o test

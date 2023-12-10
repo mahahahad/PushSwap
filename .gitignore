@@ -1,0 +1,3 @@
+*.dSYM/
+./push_swap
+Libft/objects/

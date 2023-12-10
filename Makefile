@@ -5,11 +5,16 @@ LIBFT = Libft/libft.a
 
 all : $(NAME)
 
+debug : CFLAGS += -g3 -fsanitize=address
+debug : re
+	./$(NAME) 1
+
 $(NAME) : $(LIBFT)
-	cc $(CFLAGS) push_swap.c $< -o $(NAME)
+	@cc $(CFLAGS) push_swap.c $< -o $(NAME)
+	@echo "Created push_swap!"
 
 $(LIBFT) :
-	make -C Libft/
+	@make -C Libft/
 
 clean :
 	@make clean -C Libft/
