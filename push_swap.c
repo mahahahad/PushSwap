@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   push_swap.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maabdull <maabdull@student.42abudhabi.a    +#+  +:+       +#+        */
+/*   By: maabdull <maabdull@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 13:07:13 by maabdull          #+#    #+#             */
-/*   Updated: 2023/12/10 17:00:38 by maabdull         ###   ########.fr       */
+/*   Updated: 2023/12/27 11:34:04 by maabdull         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -178,24 +178,6 @@ void	print_list(t_list *head)
 	puts("");
 }
 
-t_list	 *ra(t_list *stack_head)
-{
-	int	data;
-	t_list	*temp;
-
-	temp = stack_head;
-	data = stack_head->data;
-	while (stack_head->next)
-	{
-		stack_head->data = stack_head->next->data;
-		stack_head = stack_head->next;
-	}
-	stack_head->data = data;
-	stack_head = temp;
-	printf("ra\n");
-	return (stack_head);
-}
-
 bool	is_sorted(t_list *head)
 {
 	while (head->next)
@@ -239,6 +221,8 @@ int	main(int argc, char const *argv[])
 		return (0);
 	if (size == 2)
 		stack_a = ra(stack_a);
+	else if (size == 3)
+		stack_a = sort_three(stack_a);
 	print_list(stack_a);
 	return (0);
 }

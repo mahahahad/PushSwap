@@ -1,5 +1,16 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: maabdull <maabdull@student.42abudhabi.ae>  +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2023/12/27 11:31:41 by maabdull          #+#    #+#              #
+#    Updated: 2023/12/27 11:33:32 by maabdull         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
 NAME = push_swap
-UTILS = ft_putstr.c
 CFLAGS = -Wall -Werror -Wextra
 LIBFT = Libft/libft.a
 
@@ -10,7 +21,7 @@ debug : re
 	./$(NAME) 1
 
 $(NAME) : $(LIBFT)
-	@cc $(CFLAGS) push_swap.c $< -o $(NAME)
+	@cc $(CFLAGS) push_swap.c operations.c $< -o $(NAME)
 	@echo "Created push_swap!"
 
 $(LIBFT) :
