@@ -1,0 +1,7 @@
+Proto Algo for big
+- convert each number to its binary representation
+- check right most bit and push everything that is not 1 to B and rotate A
+- push from B until empty
+- Repeat with next rightmost bit
+
+Operations used: rotate a and push (a & b)

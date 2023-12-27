@@ -6,7 +6,7 @@
 /*   By: maabdull <maabdull@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 13:07:13 by maabdull          #+#    #+#             */
-/*   Updated: 2023/12/27 11:34:04 by maabdull         ###   ########.fr       */
+/*   Updated: 2023/12/27 14:41:55 by maabdull         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ static char	*extract_num(char *num)
 		if (num[i] == '-' && !digit_found)
 		{
 			val[j++] = num[i];
-			continue;
+			continue ;
 		}
 		if ((num[i] == '+' || num[i] == '-') && digit_found)
 			return (NULL);
@@ -155,7 +155,7 @@ t_list	*append_to_node(t_list *head, t_list *node)
 	return (head);
 }
 
-t_list *create_node(int num)
+t_list	*create_node(int num)
 {
 	t_list	*new;
 
@@ -189,6 +189,56 @@ bool	is_sorted(t_list *head)
 	return (true);
 }
 
+t_list	*sort_three(t_list *head)
+{
+	int	first;
+	int	second;
+	int	third;
+
+	first = head->data;
+	second = head->next->data;
+	third = head->next->next->data;
+	if (first > second && first > third)
+	{
+		if (second > third)
+		{
+			head = sa(head);
+			head = rra(head);
+		}
+		else
+			ra(head);
+	}
+	else if (second > first && second > third)
+	{
+		if (third > second)
+		{
+			head = sa(head);
+			head = ra(head);
+		}
+		else
+			head = rra(head);
+	}
+	else
+		head = sa(head);
+	return (head);
+}
+
+// 3, 2, 1
+// sa -> 2, 3, 1
+// rra -> 1, 2, 3
+
+// 3, 1, 2
+// ra -> 1, 2, 3
+
+// 1, 3, 2
+// sa -> 3, 1, 2
+// ra -> 1, 2, 3
+
+// 2, 3, 1
+// rra -> 1, 2, 3
+
+// 2, 1, 3
+// sa -> 1, 2, 3
 int	main(int argc, char const *argv[])
 {
 	int		i;
@@ -197,7 +247,7 @@ int	main(int argc, char const *argv[])
 	int		x;
 	int		*arr;
 	t_list	*stack_a;
-	int	size;
+	int		size;
 
 	stack_a = NULL;
 	arr = NULL;
@@ -216,7 +266,8 @@ int	main(int argc, char const *argv[])
 		return (ft_putstr_fd("Error\n", 2), 1);
 	x = -1;
 	while (argument_list[++x])
-		stack_a = append_to_node(stack_a, create_node(ft_atoi(argument_list[x])));
+		stack_a = append_to_node(stack_a,
+			create_node(ft_atoi(argument_list[x])));
 	if (is_sorted(stack_a))
 		return (0);
 	if (size == 2)

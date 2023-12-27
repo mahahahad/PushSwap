@@ -6,7 +6,7 @@
 /*   By: maabdull <maabdull@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 13:10:29 by maabdull          #+#    #+#             */
-/*   Updated: 2023/12/27 11:32:43 by maabdull         ###   ########.fr       */
+/*   Updated: 2023/12/27 14:06:32 by maabdull         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ typedef struct		s_list
 	struct s_list	*prev;
 }			t_list;
 
-t_list	*ra(t_list *stack_head);
+t_list	 *ra(t_list *head);
+t_list	 *rra(t_list *head);
+t_list	 *sa(t_list *head);
 
 #endif
