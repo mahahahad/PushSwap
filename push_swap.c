@@ -6,7 +6,7 @@
 /*   By: maabdull <maabdull@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 13:07:13 by maabdull          #+#    #+#             */
-/*   Updated: 2023/12/27 14:41:55 by maabdull         ###   ########.fr       */
+/*   Updated: 2023/12/27 14:47:11 by maabdull         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -210,7 +210,7 @@ t_list	*sort_three(t_list *head)
 	}
 	else if (second > first && second > third)
 	{
-		if (third > second)
+		if (third > first)
 		{
 			head = sa(head);
 			head = ra(head);
@@ -274,6 +274,6 @@ int	main(int argc, char const *argv[])
 		stack_a = ra(stack_a);
 	else if (size == 3)
 		stack_a = sort_three(stack_a);
-	print_list(stack_a);
+	// print_list(stack_a);
 	return (0);
 }
