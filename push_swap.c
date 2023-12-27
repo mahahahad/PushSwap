@@ -49,13 +49,13 @@ static char	*extract_num(char *num)
 	{
 		if ((num[i] == '0' && num[i + 1] != '\0') && !digit_found)
 			continue ;
-		if (num[i] == '-')
+		if (num[i] == '-' && !digit_found)
 		{
 			val[j++] = num[i];
 			continue;
 		}
-		if ((num[i] == '+') && digit_found)
-			break ;
+		if ((num[i] == '+' || num[i] == '-') && digit_found)
+			return (NULL);
 		digit_found = 1;
 		val[j++] = num[i];
 	}
