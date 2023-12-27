@@ -18,6 +18,11 @@
 # include <stdio.h>
 # include <unistd.h>
 
-// void	ft_putstr(char *str);
+typedef struct		s_list
+{
+	int		data;
+	struct s_list	*next;
+	struct s_list	*prev;
+}			t_list;
 
 #endif

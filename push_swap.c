@@ -47,9 +47,14 @@ static char	*extract_num(char *num)
 	val = malloc(ft_strlen(num) + 1);
 	while (num[++i])
 	{
-		if ((num[i] == '0' || num[i] == '+' || num[i] == '-') && !digit_found)
+		if ((num[i] == '0' && num[i + 1] != '\0') && !digit_found)
 			continue ;
-		if ((num[i] == '+' || num[i] == '-') && digit_found)
+		if (num[i] == '-')
+		{
+			val[j++] = num[i];
+			continue;
+		}
+		if ((num[i] == '+') && digit_found)
 			break ;
 		digit_found = 1;
 		val[j++] = num[i];
@@ -100,25 +105,6 @@ static bool	is_duplicate_string(char *num, char **arg_list)
 	return (false);
 }
 
-static bool	is_digit_string(const char *num)
-{
-	int	i;
-
-	i = 0;
-	while (num[i])
-	{
-		// printf("%c\n", num[i]);
-		if (ft_isdigit(num[i]) == 0)
-			return (false);
-		i++;
-	}
-	return (true);
-}
-
-// static int	is_duplicate_num(int num, int *num_list)
-// {
-// }
-
 static bool	extract_num_list(char **arg_list)
 {
 	int	i;
@@ -136,7 +122,7 @@ static bool	extract_num_list(char **arg_list)
 
 // Checks the arguments that are still in string format if they are valid and not duplicates
 // Makes it easier for passing to atoi
-static bool	are_args_valid(char **argument_list)
+static bool	are_args_valid(char **argument_list, int *size)
 {
 	int	i;
 
@@ -146,30 +132,79 @@ static bool	are_args_valid(char **argument_list)
 	while (argument_list[i])
 	{
 		if (is_long(argument_list[i]) || is_duplicate_string(argument_list[i],
-				argument_list) || !is_digit_string(argument_list[i]))
+				argument_list))
 			return (false);
 		i++;
 	}
+	*size = i;
 	return (true);
 }
 
-// Convert each (string) num in the (string) array passed to an integer
-// Returns an int array that is malloced
-// TODO: Free wherever used.
-static int	*convert_num_list(char **arg_list)
+t_list	*append_to_node(t_list *head, t_list *node)
 {
-	int	i;
-	int	*num_list;
+	t_list	*temp;
 
-	i = 0;
-	// num_list = malloc(size * 4);
-	num_list = NULL;
-	while (arg_list[i])
+	if (!head)
+		return (node);
+	temp = head;
+	while (head->next)
+		head = head->next;
+	node->prev = head;
+	head->next = node;
+	head = temp;
+	return (head);
+}
+
+t_list *create_node(int num)
+{
+	t_list	*new;
+
+	new = (t_list *)malloc(sizeof(t_list));
+	new->next = NULL;
+	new->prev = NULL;
+	new->data = num;
+	return (new);
+}
+
+void	print_list(t_list *head)
+{
+	while (head)
 	{
-		// num_list[i] = ft_atoi(arg_list[i]);
-		i++;
+		printf("%d", head->data);
+		if (head->next)
+			printf(", ");
+		head = head->next;
 	}
-	return (num_list);
+	puts("");
+}
+
+t_list	 *ra(t_list *stack_head)
+{
+	int	data;
+	t_list	*temp;
+
+	temp = stack_head;
+	data = stack_head->data;
+	while (stack_head->next)
+	{
+		stack_head->data = stack_head->next->data;
+		stack_head = stack_head->next;
+	}
+	stack_head->data = data;
+	stack_head = temp;
+	printf("ra\n");
+	return (stack_head);
+}
+
+bool	is_sorted(t_list *head)
+{
+	while (head->next)
+	{
+		if (head->data > head->next->data)
+			return (false);
+		head = head->next;
+	}
+	return (true);
 }
 
 int	main(int argc, char const *argv[])
@@ -179,8 +214,10 @@ int	main(int argc, char const *argv[])
 	char	**argument_list;
 	int		x;
 	int		*arr;
+	t_list	*stack_a;
+	int	size;
 
-	// int	*stack_values;
+	stack_a = NULL;
 	arr = NULL;
 	arguments = malloc(1);
 	i = 1;
@@ -192,14 +229,16 @@ int	main(int argc, char const *argv[])
 		arguments = ft_strjoin(arguments, ft_strjoin(" ", argv[i]));
 		i++;
 	}
-	// printf("%s\n", arguments);
 	argument_list = ft_split(arguments, ' ');
-	if (!are_args_valid(argument_list))
+	if (!are_args_valid(argument_list, &size))
 		return (ft_putstr_fd("Error\n", 2), 1);
 	x = -1;
-	convert_num_list(argument_list);
-	// Add to int array
 	while (argument_list[++x])
-		printf("%d\n", ft_atoi(argument_list[x]));
+		stack_a = append_to_node(stack_a, create_node(ft_atoi(argument_list[x])));
+	if (is_sorted(stack_a))
+		return (0);
+	if (size == 2)
+		stack_a = ra(stack_a);
+	print_list(stack_a);
 	return (0);
 }

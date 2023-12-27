@@ -5,7 +5,7 @@ LIBFT = Libft/libft.a
 
 all : $(NAME)
 
-debug : CFLAGS += -g3 -fsanitize=address
+debug : CFLAGS += -g
 debug : re
 	./$(NAME) 1
 
