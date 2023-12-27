@@ -6,7 +6,7 @@
 /*   By: maabdull <maabdull@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/27 11:31:01 by maabdull          #+#    #+#             */
-/*   Updated: 2023/12/27 15:30:41 by maabdull         ###   ########.fr       */
+/*   Updated: 2023/12/27 15:32:27 by maabdull         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ t_list	 *ra(t_list *head)
 	return (head);
 }
 
-t_list	*push_to_stack(t_list *head, t_list *node)
+static t_list	*push_to_stack(t_list *head, t_list *node)
 {
 	if (!head)
 		return (node);

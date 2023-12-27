@@ -6,7 +6,7 @@
 /*   By: maabdull <maabdull@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 13:07:13 by maabdull          #+#    #+#             */
-/*   Updated: 2023/12/27 15:31:43 by maabdull         ###   ########.fr       */
+/*   Updated: 2023/12/27 15:44:43 by maabdull         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -247,9 +247,11 @@ int	main(int argc, char const *argv[])
 	int		x;
 	int		*arr;
 	t_list	*stack_a;
+	t_list	*stack_b;
 	int		size;
 
 	stack_a = NULL;
+	stack_b = NULL;
 	arr = NULL;
 	arguments = malloc(1);
 	i = 1;
