@@ -6,7 +6,7 @@
 /*   By: maabdull <maabdull@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/27 11:31:01 by maabdull          #+#    #+#             */
-/*   Updated: 2023/12/27 14:30:09 by maabdull         ###   ########.fr       */
+/*   Updated: 2023/12/27 15:30:41 by maabdull         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,3 +63,27 @@ t_list	 *ra(t_list *head)
 	printf("ra\n");
 	return (head);
 }
+
+t_list	*push_to_stack(t_list *head, t_list *node)
+{
+	if (!head)
+		return (node);
+	node->next = head;
+	head->prev = node;
+	head = head->prev;
+	return (head);
+}
+
+void	push(t_list **first_stack, t_list **second_stack)
+{
+	t_list	*temp;
+	int	data;
+
+	temp = *first_stack;
+	data = temp->data;
+	*first_stack = temp->next;
+	temp->next = NULL;
+	temp->prev = NULL;
+	*second_stack = push_to_stack(*second_stack, temp);
+}
+
