@@ -77,10 +77,8 @@ static t_list	*push_to_stack(t_list *head, t_list *node)
 void	push(t_list **first_stack, t_list **second_stack)
 {
 	t_list	*temp;
-	int	data;
 
 	temp = *first_stack;
-	data = temp->data;
 	*first_stack = temp->next;
 	temp->next = NULL;
 	temp->prev = NULL;

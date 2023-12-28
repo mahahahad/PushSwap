@@ -155,14 +155,16 @@ t_list	*append_to_node(t_list *head, t_list *node)
 	return (head);
 }
 
-t_list	*create_node(int num)
+t_list	*create_node(int num, int rank)
 {
 	t_list	*new;
 
 	new = (t_list *)malloc(sizeof(t_list));
 	new->next = NULL;
 	new->prev = NULL;
+	new->rank = rank;
 	new->data = num;
+	// printf("\nCreated node: %d, rank = %d\n", new->data, new->rank);
 	return (new);
 }
 
@@ -223,6 +225,78 @@ t_list	*sort_three(t_list *head)
 	return (head);
 }
 
+int	*compare(int *arr_sorted, int *arr, int size)
+{
+	int	i;
+	int	j;
+	int	*ranks;
+
+	i = 0;
+	j = 0;
+	ranks = malloc(size * sizeof(int));
+	while (i < size)
+	{
+		j = 0;
+		while (j < size)
+		{
+			if (arr_sorted[j] == arr[i])
+				ranks[i] = j;
+			j++;
+		}
+		i++;
+	}
+	return (ranks);
+}
+
+void	print_int_arr(int *arr, int size)
+{
+	int	i;
+
+	i = 0;
+	while (i < size)
+	{
+		printf("%d", arr[i]);
+		if (i + 1 != size)
+			printf(", ");
+		i++;
+	}
+	puts("");
+}
+
+int	*sort_arr(char **arg_list, int size)
+{
+	int	i;
+	int	*arr;
+	int	*arr_copy;
+	int	temp;
+
+	i = -1;
+	arr = malloc(size * sizeof(int));
+	arr_copy = malloc(size * sizeof(int));
+	while (arg_list[++i])
+	{
+		arr[i] = ft_atoi(arg_list[i]);
+		arr_copy[i] = ft_atoi(arg_list[i]);
+	}
+	print_int_arr(arr, size);
+	i = 0;
+	while (i < size - 1)
+	{
+		if (arr[i] > arr[i + 1])
+		{
+			temp = arr[i];
+			arr[i] = arr[i + 1];
+			arr[i + 1] = temp;
+			i = 0;
+		}
+		else
+			i++;
+	}
+	// print_int_arr(arr, size);
+	arr = compare(arr, arr_copy, size);
+	return (arr);
+}
+
 // 3, 2, 1
 // sa -> 2, 3, 1
 // rra -> 1, 2, 3
@@ -245,14 +319,16 @@ int	main(int argc, char const *argv[])
 	char	*arguments;
 	char	**argument_list;
 	int		x;
-	int		*arr;
+	// int		*arr;
 	t_list	*stack_a;
-	t_list	*stack_b;
+	// t_list	*stack_b;
 	int		size;
+	int	*ranks;
 
 	stack_a = NULL;
-	stack_b = NULL;
-	arr = NULL;
+	// stack_b = NULL;
+	// arr = NULL;
+	ranks = NULL;
 	arguments = malloc(1);
 	i = 1;
 	if (argc == 1)
@@ -267,9 +343,11 @@ int	main(int argc, char const *argv[])
 	if (!are_args_valid(argument_list, &size))
 		return (ft_putstr_fd("Error\n", 2), 1);
 	x = -1;
+	ranks = sort_arr(argument_list, size);
+	print_int_arr(ranks, size);
 	while (argument_list[++x])
 		stack_a = append_to_node(stack_a,
-			create_node(ft_atoi(argument_list[x])));
+			create_node(ft_atoi(argument_list[x]), ranks[x]));
 	if (is_sorted(stack_a))
 		return (0);
 	if (size == 2)
