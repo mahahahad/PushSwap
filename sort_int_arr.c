@@ -4,25 +4,22 @@
 void  sort_arr(int arr[], int size)
 {
     int   i;
-    int     j;
     int   temp;
     int   *tab;
 
     tab = arr;
     i = 0;
-    j = 1;
-    while (i < (size - 1) && j < size)
+    while (i < (size - 1))
     {
-        if (i + j < size && tab[i] > tab[i + j])
+        if (tab[i] > tab[i + 1])
         {
-            temp = tab[i + j];
-            tab[i + j] = tab[i];
+            temp = tab[i + 1];
+            tab[i + 1] = tab[i];
             tab[i] = temp;
-        }
-        if (j != (size - 1))
-            j++;
+	    i = 0;
+	}
         else
-            j = ++i;
+            i++;
     }
 }
 
