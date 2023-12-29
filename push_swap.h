@@ -22,13 +22,14 @@ typedef struct		s_list
 {
 	int		rank;
 	int		data;
+	char		stack_name;
 	struct s_list	*next;
 	struct s_list	*prev;
 }			t_list;
 
-t_list	*ra(t_list *head);
 t_list	*rra(t_list *head);
 t_list	*sa(t_list *head);
+void	ra(t_list **head);
 void	push(t_list **first_stack, t_list **second_stack);
 
 #endif

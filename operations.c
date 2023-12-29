@@ -46,22 +46,20 @@ t_list	 *rra(t_list *head)
 
 // Rotate
 // Move the top number of the stack to the bottom
-t_list	 *ra(t_list *head)
+void	ra(t_list **stack_head)
 {
-	int	data;
-	t_list	*stack_head;
+	t_list	*temp;
+	t_list	*head;
 
-	stack_head = head;
-	data = head->data;
+	temp = *stack_head;
+	*stack_head = (*stack_head)->next;
+	head = *stack_head;
 	while (head->next)
-	{
-		head->data = head->next->data;
 		head = head->next;
-	}
-	head->data = data;
-	head = stack_head;
+	temp->prev = head;
+	temp->next = NULL;
+	head->next = temp;
 	printf("ra\n");
-	return (head);
 }
 
 static t_list	*push_to_stack(t_list *head, t_list *node)
@@ -82,6 +80,16 @@ void	push(t_list **first_stack, t_list **second_stack)
 	*first_stack = temp->next;
 	temp->next = NULL;
 	temp->prev = NULL;
+	if (temp->stack_name == 'A')
+	{
+		puts("pa");
+		temp->stack_name = 'B';
+	}
+	else
+	{
+		puts("pb");
+		temp->stack_name = 'A';
+	}
 	*second_stack = push_to_stack(*second_stack, temp);
 }
 

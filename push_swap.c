@@ -164,6 +164,7 @@ t_list	*create_node(int num, int rank)
 	new->prev = NULL;
 	new->rank = rank;
 	new->data = num;
+	new->stack_name = 'A';
 	// printf("\nCreated node: %d, rank = %d\n", new->data, new->rank);
 	return (new);
 }
@@ -208,14 +209,14 @@ t_list	*sort_three(t_list *head)
 			head = rra(head);
 		}
 		else
-			ra(head);
+			ra(&head);
 	}
 	else if (second > first && second > third)
 	{
 		if (third > first)
 		{
 			head = sa(head);
-			head = ra(head);
+			ra(&head);
 		}
 		else
 			head = rra(head);
@@ -278,7 +279,7 @@ int	*sort_arr(char **arg_list, int size)
 		arr[i] = ft_atoi(arg_list[i]);
 		arr_copy[i] = ft_atoi(arg_list[i]);
 	}
-	print_int_arr(arr, size);
+	// print_int_arr(arr, size);
 	i = 0;
 	while (i < size - 1)
 	{
@@ -295,6 +296,22 @@ int	*sort_arr(char **arg_list, int size)
 	// print_int_arr(arr, size);
 	arr = compare(arr, arr_copy, size);
 	return (arr);
+}
+
+t_list	**sort_radix(t_list **head_a, t_list **head_b, int size)
+{
+	int	i;
+
+	i = 0;
+	while (i < size)
+	{
+		if ((*head_a)->rank & 1)
+			ra(head_a);
+		else
+			push(head_a, head_b);
+		i++;
+	}
+	return (head_a);
 }
 
 // 3, 2, 1
@@ -319,15 +336,13 @@ int	main(int argc, char const *argv[])
 	char	*arguments;
 	char	**argument_list;
 	int		x;
-	// int		*arr;
 	t_list	*stack_a;
-	// t_list	*stack_b;
+	t_list	*stack_b;
 	int		size;
 	int	*ranks;
 
 	stack_a = NULL;
-	// stack_b = NULL;
-	// arr = NULL;
+	stack_b = NULL;
 	ranks = NULL;
 	arguments = malloc(1);
 	i = 1;
@@ -344,16 +359,18 @@ int	main(int argc, char const *argv[])
 		return (ft_putstr_fd("Error\n", 2), 1);
 	x = -1;
 	ranks = sort_arr(argument_list, size);
-	print_int_arr(ranks, size);
+	// print_int_arr(ranks, size);
 	while (argument_list[++x])
 		stack_a = append_to_node(stack_a,
 			create_node(ft_atoi(argument_list[x]), ranks[x]));
 	if (is_sorted(stack_a))
 		return (0);
 	if (size == 2)
-		stack_a = ra(stack_a);
+		ra(&stack_a);
 	else if (size == 3)
 		stack_a = sort_three(stack_a);
-	// print_list(stack_a);
+	else
+		sort_radix(&stack_a, &stack_b, size);
+	print_list(stack_b);
 	return (0);
 }
