@@ -298,18 +298,42 @@ int	*sort_arr(char **arg_list, int size)
 	return (arr);
 }
 
+void	push_all_to_a(t_list **head_a, t_list **head_b)
+{
+	while ((*head_b))
+		push(head_b, head_a);
+}
+
+bool	is_stack_empty(t_list **stack)
+{
+	if ((*stack) != NULL)
+		return (false);
+	return (true);
+}
+
 t_list	**sort_radix(t_list **head_a, t_list **head_b, int size)
 {
 	int	i;
+	int	shift;
 
 	i = 0;
-	while (i < size)
+	shift = 0;
+	while (i < size || (is_stack_empty(head_b) && !is_sorted(*head_a)))
 	{
-		if ((*head_a)->rank & 1)
+		if ((*head_a)->rank & (1<<shift))
 			ra(head_a);
 		else
 			push(head_a, head_b);
 		i++;
+		if (i == size)
+		{
+			push_all_to_a(head_a, head_b);
+			if (shift != 2)
+			{
+				i = 0;
+				shift++;
+			}
+		}
 	}
 	return (head_a);
 }
@@ -371,6 +395,6 @@ int	main(int argc, char const *argv[])
 		stack_a = sort_three(stack_a);
 	else
 		sort_radix(&stack_a, &stack_b, size);
-	print_list(stack_b);
+	//print_list(stack_a);
 	return (0);
 }
