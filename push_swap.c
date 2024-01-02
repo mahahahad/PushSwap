@@ -6,7 +6,7 @@
 /*   By: maabdull <maabdull@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 13:07:13 by maabdull          #+#    #+#             */
-/*   Updated: 2023/12/27 15:44:43 by maabdull         ###   ########.fr       */
+/*   Updated: 2024/01/02 11:54:22 by maabdull         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -181,14 +181,17 @@ void	print_list(t_list *head)
 	puts("");
 }
 
-bool	is_sorted(t_list *head)
+bool	is_sorted(t_list *head, t_list *head_b)
 {
+	if (head_b)
+		return (false);
 	while (head->next)
 	{
 		if (head->data > head->next->data)
 			return (false);
 		head = head->next;
 	}
+	puts("Your list is already sorted");
 	return (true);
 }
 
@@ -318,7 +321,7 @@ t_list	**sort_radix(t_list **head_a, t_list **head_b, int size)
 
 	i = 0;
 	shift = 0;
-	while (i < size || (is_stack_empty(head_b) && !is_sorted(*head_a)))
+	while (i < size && !is_sorted(*head_a, *head_b))
 	{
 		if ((*head_a)->rank & (1<<shift))
 			ra(head_a);
@@ -328,12 +331,14 @@ t_list	**sort_radix(t_list **head_a, t_list **head_b, int size)
 		if (i == size)
 		{
 			push_all_to_a(head_a, head_b);
-			if (shift != 2)
+			if (shift != 3)
 			{
 				i = 0;
 				shift++;
 			}
 		}
+		if((*head_a)->data)
+			print_list(*head_a);
 	}
 	return (head_a);
 }
@@ -387,7 +392,7 @@ int	main(int argc, char const *argv[])
 	while (argument_list[++x])
 		stack_a = append_to_node(stack_a,
 			create_node(ft_atoi(argument_list[x]), ranks[x]));
-	if (is_sorted(stack_a))
+	if (is_sorted(stack_a, stack_b))
 		return (0);
 	if (size == 2)
 		ra(&stack_a);

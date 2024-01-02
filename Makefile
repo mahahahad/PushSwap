@@ -6,7 +6,7 @@
 #    By: maabdull <maabdull@student.42abudhabi.ae>  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/12/27 11:31:41 by maabdull          #+#    #+#              #
-#    Updated: 2023/12/27 11:33:32 by maabdull         ###   ########.fr        #
+#    Updated: 2024/01/02 11:51:31 by maabdull         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,6 @@ all : $(NAME)
 
 debug : CFLAGS += -g
 debug : re
-	./$(NAME) 1
 
 $(NAME) : $(LIBFT)
 	@cc $(CFLAGS) push_swap.c operations.c $< -o $(NAME)
