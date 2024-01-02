@@ -6,7 +6,7 @@
 /*   By: maabdull <maabdull@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 13:07:13 by maabdull          #+#    #+#             */
-/*   Updated: 2024/01/02 12:17:18 by maabdull         ###   ########.fr       */
+/*   Updated: 2024/01/02 12:33:44 by maabdull         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -421,6 +421,6 @@ int	main(int argc, char const *argv[])
 		stack_a = sort_three(stack_a);
 	else
 		sort_radix(&stack_a, &stack_b, size, max);
-	print_list(stack_a);
+	// print_list(stack_a);
 	return (0);
 }

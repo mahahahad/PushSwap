@@ -6,7 +6,7 @@
 /*   By: maabdull <maabdull@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/27 11:31:01 by maabdull          #+#    #+#             */
-/*   Updated: 2023/12/27 15:32:27 by maabdull         ###   ########.fr       */
+/*   Updated: 2024/01/02 12:24:43 by maabdull         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,12 +82,12 @@ void	push(t_list **first_stack, t_list **second_stack)
 	temp->prev = NULL;
 	if (temp->stack_name == 'A')
 	{
-		puts("pa");
+		puts("pb");
 		temp->stack_name = 'B';
 	}
 	else
 	{
-		puts("pb");
+		puts("pa");
 		temp->stack_name = 'A';
 	}
 	*second_stack = push_to_stack(*second_stack, temp);
