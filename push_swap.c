@@ -6,7 +6,7 @@
 /*   By: maabdull <maabdull@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 13:07:13 by maabdull          #+#    #+#             */
-/*   Updated: 2024/01/02 11:54:22 by maabdull         ###   ########.fr       */
+/*   Updated: 2024/01/02 12:17:18 by maabdull         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -191,7 +191,6 @@ bool	is_sorted(t_list *head, t_list *head_b)
 			return (false);
 		head = head->next;
 	}
-	puts("Your list is already sorted");
 	return (true);
 }
 
@@ -229,15 +228,17 @@ t_list	*sort_three(t_list *head)
 	return (head);
 }
 
-int	*compare(int *arr_sorted, int *arr, int size)
+int	*compare(int *arr_sorted, int *arr, int size, int *max)
 {
 	int	i;
 	int	j;
 	int	*ranks;
+	int	highest;
 
 	i = 0;
 	j = 0;
 	ranks = malloc(size * sizeof(int));
+	highest = 0;
 	while (i < size)
 	{
 		j = 0;
@@ -245,10 +246,13 @@ int	*compare(int *arr_sorted, int *arr, int size)
 		{
 			if (arr_sorted[j] == arr[i])
 				ranks[i] = j;
+			if (highest < ranks[i])
+				highest = ranks[i];
 			j++;
 		}
 		i++;
 	}
+	*max = highest;
 	return (ranks);
 }
 
@@ -267,7 +271,7 @@ void	print_int_arr(int *arr, int size)
 	puts("");
 }
 
-int	*sort_arr(char **arg_list, int size)
+int	*sort_arr(char **arg_list, int size, int *max)
 {
 	int	i;
 	int	*arr;
@@ -297,7 +301,7 @@ int	*sort_arr(char **arg_list, int size)
 			i++;
 	}
 	// print_int_arr(arr, size);
-	arr = compare(arr, arr_copy, size);
+	arr = compare(arr, arr_copy, size, max);
 	return (arr);
 }
 
@@ -314,13 +318,28 @@ bool	is_stack_empty(t_list **stack)
 	return (true);
 }
 
-t_list	**sort_radix(t_list **head_a, t_list **head_b, int size)
+int	get_bits(int max)
+{
+	int	bits;
+
+	bits = 0;
+	while (max)
+	{
+		max = max>>1;
+		bits++;
+	}
+	return (bits);
+}
+
+t_list	**sort_radix(t_list **head_a, t_list **head_b, int size, int max)
 {
 	int	i;
 	int	shift;
+	int	shift_limit;
 
 	i = 0;
 	shift = 0;
+	shift_limit = get_bits(max);
 	while (i < size && !is_sorted(*head_a, *head_b))
 	{
 		if ((*head_a)->rank & (1<<shift))
@@ -331,14 +350,14 @@ t_list	**sort_radix(t_list **head_a, t_list **head_b, int size)
 		if (i == size)
 		{
 			push_all_to_a(head_a, head_b);
-			if (shift != 3)
+			if (shift != shift_limit)
 			{
 				i = 0;
 				shift++;
 			}
 		}
-		if((*head_a)->data)
-			print_list(*head_a);
+		// if((*head_a)->data)
+		//	print_list(*head_a);
 	}
 	return (head_a);
 }
@@ -369,12 +388,14 @@ int	main(int argc, char const *argv[])
 	t_list	*stack_b;
 	int		size;
 	int	*ranks;
+	int	max;
 
 	stack_a = NULL;
 	stack_b = NULL;
 	ranks = NULL;
 	arguments = malloc(1);
 	i = 1;
+	max = 0;
 	if (argc == 1)
 		return (0);
 	while (i < argc)
@@ -387,7 +408,7 @@ int	main(int argc, char const *argv[])
 	if (!are_args_valid(argument_list, &size))
 		return (ft_putstr_fd("Error\n", 2), 1);
 	x = -1;
-	ranks = sort_arr(argument_list, size);
+	ranks = sort_arr(argument_list, size, &max);
 	// print_int_arr(ranks, size);
 	while (argument_list[++x])
 		stack_a = append_to_node(stack_a,
@@ -399,7 +420,7 @@ int	main(int argc, char const *argv[])
 	else if (size == 3)
 		stack_a = sort_three(stack_a);
 	else
-		sort_radix(&stack_a, &stack_b, size);
-	//print_list(stack_a);
+		sort_radix(&stack_a, &stack_b, size, max);
+	print_list(stack_a);
 	return (0);
 }
