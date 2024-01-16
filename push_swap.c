@@ -6,7 +6,7 @@
 /*   By: maabdull <maabdull@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 13:07:13 by maabdull          #+#    #+#             */
-/*   Updated: 2024/01/16 11:59:23 by maabdull         ###   ########.fr       */
+/*   Updated: 2024/01/16 15:43:30 by maabdull         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -380,7 +380,7 @@ t_list	**sort_radix(t_list **head_a, t_list **head_b, int size, int max)
 
 	Expected Order:
 	Stack B:  2 1
-			  |
+				|
 	Stack A: 0 3 4
 	- You can push then swap (haha push_swap)
 
@@ -391,6 +391,7 @@ t_list	**sort_radix(t_list **head_a, t_list **head_b, int size, int max)
 	Stack B:
 	Stack A: 1 0 2 3 4 -> 0 1 2 3 4
 */
+
 /*
 	Started with: 2 1 3 4 0
 
@@ -400,46 +401,67 @@ t_list	**sort_radix(t_list **head_a, t_list **head_b, int size, int max)
 
 	Stack B: 2
 	Stack A: 0 1 3 4
-	- You can reverse till you reach a number greater than the one in stack b, push, and reverse till it is in order
+	- You can reverse till you reach a number greater than the one in stack b,
+		push, and reverse till it is in order
 */
+
+void	push_min(t_list **head_a, t_list **head_b, int rank)
+{
+	while ((*head_a)->next)
+	{
+		if ((*head_a)->rank == rank)
+		{
+			push(head_a, head_b);
+			break ;
+		}
+		ra(head_a);
+	}
+}
+
+// Push first two min values to stack b
+// Sort the remaining three values
+// Push from b to a
 t_list	**sort_five(t_list **head_a, t_list **head_b)
 {
-	int	i;
-
-	i = 0;
-	if (is_sorted((*head_a)->next, *head_b))
-		ra(head_a);
-	else
-	{
-		push(head_a, head_b);
-		push(head_a, head_b);
-		*head_a = sort_three(*head_a);
-		while ((*head_b)->data > (*head_a)->data)
-		{
-			ra(head_a);
-			i++;
-		}
-		push(head_b, head_a);
-		while (i)
-		{
-			*head_a = rra(*head_a);
-			i--;
-		}
-		while ((*head_b)->data > (*head_a)->data)
-		{
-			ra(head_a);
-			i++;
-		}
-		push(head_b, head_a);
-		while (i)
-		{
-			*head_a = rra(*head_a);
-			i--;
-		}
-		print_list(*head_a);
-		// if ((*head_a)->data > (*head_a)->next->data)
-		// 	ra(head_a);
-	}
+	// int	i;
+	// i = 0;
+	// if (is_sorted((*head_a)->next, *head_b))
+	// 	ra(head_a);
+	// else
+	// {
+	push_min(head_a, head_b, 0);
+	push_min(head_a, head_b, 1);
+	// print_list((*head_b));
+	// print_list((*head_a));
+	// *head_a = sort_three((*head_a));
+	// print_list((*head_a));
+	push_all_to_a(head_a, head_b);
+	// while ((*head_b)->data > (*head_a)->data)
+	// {
+	// 	ra(head_a);
+	// 	i++;
+	// }
+	// push(head_b, head_a);
+	// while (i)
+	// {
+	// 	*head_a = rra(*head_a);
+	// 	i--;
+	// }
+	// while ((*head_b)->data > (*head_a)->data)
+	// {
+	// 	ra(head_a);
+	// 	i++;
+	// }
+	// push(head_b, head_a);
+	// while (i)
+	// {
+	// 	*head_a = rra(*head_a);
+	// 	i--;
+	// }
+	print_list(*head_a);
+	// if ((*head_a)->data > (*head_a)->next->data)
+	// 	ra(head_a);
+	// }
 	return (head_a);
 }
 
