@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   operations.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maabdull <maabdull@student.42abudhabi.ae>  +#+  +:+       +#+        */
+/*   By: maabdull <maabdull@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/27 11:31:01 by maabdull          #+#    #+#             */
-/*   Updated: 2024/01/02 12:24:43 by maabdull         ###   ########.fr       */
+/*   Updated: 2024/01/16 11:38:45 by maabdull         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,8 @@ void	push(t_list **first_stack, t_list **second_stack)
 
 	temp = *first_stack;
 	*first_stack = temp->next;
+	if (*first_stack)
+		(*first_stack)->prev = NULL;
 	temp->next = NULL;
 	temp->prev = NULL;
 	if (temp->stack_name == 'A')

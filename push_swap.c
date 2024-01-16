@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   push_swap.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maabdull <maabdull@student.42abudhabi.ae>  +#+  +:+       +#+        */
+/*   By: maabdull <maabdull@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 13:07:13 by maabdull          #+#    #+#             */
-/*   Updated: 2024/01/02 12:33:44 by maabdull         ###   ########.fr       */
+/*   Updated: 2024/01/16 11:59:23 by maabdull         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -325,7 +325,7 @@ int	get_bits(int max)
 	bits = 0;
 	while (max)
 	{
-		max = max>>1;
+		max = max >> 1;
 		bits++;
 	}
 	return (bits);
@@ -342,7 +342,7 @@ t_list	**sort_radix(t_list **head_a, t_list **head_b, int size, int max)
 	shift_limit = get_bits(max);
 	while (i < size && !is_sorted(*head_a, *head_b))
 	{
-		if ((*head_a)->rank & (1<<shift))
+		if ((*head_a)->rank & (1 << shift))
 			ra(head_a);
 		else
 			push(head_a, head_b);
@@ -358,6 +358,87 @@ t_list	**sort_radix(t_list **head_a, t_list **head_b, int size, int max)
 		}
 		// if((*head_a)->data)
 		//	print_list(*head_a);
+	}
+	return (head_a);
+}
+// 1 2 3 5 4
+// 3 5 4 -> 3 4 5
+// 12345
+// 1 2 3 4 0
+// 3 4 0 -> 0 3 4
+// THIS IS THE TRICKY PART I THINK
+// THE NUMBERS FROM THE SECOND STACK ARE NOW SUPPOSED TO ENTER STACK A BUT
+// THEIR ORDER IS UNSURE. THEY CAN EITHER BE
+// - Top of the stack
+// - Bottom of the stack
+// - Somewhere in the middle
+/*
+	Started with: 1 2 3 4 0
+
+	Stack B: 2 1
+	Stack A: 0 3 4
+
+	Expected Order:
+	Stack B:  2 1
+			  |
+	Stack A: 0 3 4
+	- You can push then swap (haha push_swap)
+
+	Stack B: 1
+	Stack A: 2 0 3 4 -> 0 2 3 4
+	- Push then swap again
+
+	Stack B:
+	Stack A: 1 0 2 3 4 -> 0 1 2 3 4
+*/
+/*
+	Started with: 2 1 3 4 0
+
+	Stack B: 1 2
+	Stack A: 0 3 4
+	- Push then swap
+
+	Stack B: 2
+	Stack A: 0 1 3 4
+	- You can reverse till you reach a number greater than the one in stack b, push, and reverse till it is in order
+*/
+t_list	**sort_five(t_list **head_a, t_list **head_b)
+{
+	int	i;
+
+	i = 0;
+	if (is_sorted((*head_a)->next, *head_b))
+		ra(head_a);
+	else
+	{
+		push(head_a, head_b);
+		push(head_a, head_b);
+		*head_a = sort_three(*head_a);
+		while ((*head_b)->data > (*head_a)->data)
+		{
+			ra(head_a);
+			i++;
+		}
+		push(head_b, head_a);
+		while (i)
+		{
+			*head_a = rra(*head_a);
+			i--;
+		}
+		while ((*head_b)->data > (*head_a)->data)
+		{
+			ra(head_a);
+			i++;
+		}
+		push(head_b, head_a);
+		while (i)
+		{
+			*head_a = rra(*head_a);
+			i--;
+		}
+		print_list(*head_a);
+		// if ((*head_a)->data > (*head_a)->next->data)
+		// 	ra(head_a);
 	}
 	return (head_a);
 }
@@ -387,8 +468,8 @@ int	main(int argc, char const *argv[])
 	t_list	*stack_a;
 	t_list	*stack_b;
 	int		size;
-	int	*ranks;
-	int	max;
+	int		*ranks;
+	int		max;
 
 	stack_a = NULL;
 	stack_b = NULL;
@@ -411,14 +492,16 @@ int	main(int argc, char const *argv[])
 	ranks = sort_arr(argument_list, size, &max);
 	// print_int_arr(ranks, size);
 	while (argument_list[++x])
-		stack_a = append_to_node(stack_a,
-			create_node(ft_atoi(argument_list[x]), ranks[x]));
+		stack_a = append_to_node(stack_a, create_node(ft_atoi(argument_list[x]),
+				ranks[x]));
 	if (is_sorted(stack_a, stack_b))
 		return (0);
 	if (size == 2)
 		ra(&stack_a);
 	else if (size == 3)
 		stack_a = sort_three(stack_a);
+	else if (size <= 5)
+		sort_five(&stack_a, &stack_b);
 	else
 		sort_radix(&stack_a, &stack_b, size, max);
 	// print_list(stack_a);
