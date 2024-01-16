@@ -30,6 +30,7 @@ typedef struct		s_list
 t_list	*rra(t_list *head);
 t_list	*sa(t_list *head);
 void	ra(t_list **head);
+void	swap(t_list **head);
 void	push(t_list **first_stack, t_list **second_stack);
 
 #endif
