@@ -25,6 +25,19 @@ t_list	 *sa(t_list *head)
 	return (head);
 }
 
+void	swap(t_list **head)
+{
+	int	data;
+
+	data = (*head)->data;
+	(*head)->data = (*head)->next->data;
+	(*head)->next->data = data;
+	if ((*head)->stack_name == 'A')
+		puts("sa");
+	else
+		puts("sb");
+}
+
 // Reverse Rotate
 // Move the bottom number from the stack to the top
 t_list	 *rra(t_list *head)
