@@ -200,6 +200,8 @@ t_list	*sort_three(t_list *head)
 	int	second;
 	int	third;
 
+	if (is_sorted(head, NULL))
+		return (head);
 	first = head->data;
 	second = head->next->data;
 	third = head->next->next->data;
@@ -405,11 +407,11 @@ t_list	**sort_radix(t_list **head_a, t_list **head_b, int size, int max)
 		push, and reverse till it is in order
 */
 
-void	push_min(t_list **head_a, t_list **head_b, int rank)
+void	push_min(t_list **head_a, t_list **head_b)
 {
 	while ((*head_a)->next)
 	{
-		if ((*head_a)->rank == rank)
+		if ((*head_a)->rank == 0 || (*head_a)->rank == 1)
 		{
 			push(head_a, head_b);
 			break ;
@@ -418,9 +420,14 @@ void	push_min(t_list **head_a, t_list **head_b, int rank)
 	}
 }
 
-// Push first two min values to stack b
-// Sort the remaining three values
-// Push from b to a
+// Sorts a stack with EXACTLY TWO NUMBERS to be in descending order
+void	descend_sort(t_list **head)
+{
+	if ((*head)->data < (*head)->next->data)
+		swap(head);
+}
+// 5 2 1 3 4
+//
 t_list	**sort_five(t_list **head_a, t_list **head_b)
 {
 	// int	i;
@@ -429,11 +436,12 @@ t_list	**sort_five(t_list **head_a, t_list **head_b)
 	// 	ra(head_a);
 	// else
 	// {
-	push_min(head_a, head_b, 0);
-	push_min(head_a, head_b, 1);
+	push_min(head_a, head_b);
+	push_min(head_a, head_b);
+	descend_sort(head_b);
 	// print_list((*head_b));
 	// print_list((*head_a));
-	// *head_a = sort_three((*head_a));
+	*head_a = sort_three(*head_a);
 	// print_list((*head_a));
 	push_all_to_a(head_a, head_b);
 	// while ((*head_b)->data > (*head_a)->data)
