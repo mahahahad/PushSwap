@@ -6,7 +6,7 @@
 /*   By: maabdull <maabdull@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 13:07:13 by maabdull          #+#    #+#             */
-/*   Updated: 2024/01/16 15:43:30 by maabdull         ###   ########.fr       */
+/*   Updated: 2024/01/22 16:51:33 by maabdull         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -466,7 +466,7 @@ t_list	**sort_five(t_list **head_a, t_list **head_b)
 	// 	*head_a = rra(*head_a);
 	// 	i--;
 	// }
-	print_list(*head_a);
+	// print_list(*head_a);
 	// if ((*head_a)->data > (*head_a)->next->data)
 	// 	ra(head_a);
 	// }
