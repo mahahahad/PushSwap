@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: maabdull <maabdull@student.42abudhabi.ae>  +#+  +:+       +#+         #
+#    By: maabdull <maabdull@student.42abudhabi.a    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/12/27 11:31:41 by maabdull          #+#    #+#              #
-#    Updated: 2024/01/02 11:51:31 by maabdull         ###   ########.fr        #
+#    Updated: 2024/01/22 17:19:28 by maabdull         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,7 @@ debug : CFLAGS += -g
 debug : re
 
 $(NAME) : $(LIBFT)
-	@cc $(CFLAGS) push_swap.c operations.c $< -o $(NAME)
+	@cc $(CFLAGS) push_swap.c operations.c parse_args.c $< -o $(NAME)
 	@echo "Created push_swap!"
 
 $(LIBFT) :

@@ -6,7 +6,7 @@
 /*   By: maabdull <maabdull@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 16:59:51 by maabdull          #+#    #+#             */
-/*   Updated: 2024/01/22 17:01:11 by maabdull         ###   ########.fr       */
+/*   Updated: 2024/01/22 17:18:18 by maabdull         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ static bool	extract_num_list(char **arg_list)
 
 // Checks the arguments that are still in string format if they are valid and not duplicates
 // Makes it easier for passing to atoi
-static bool	are_args_valid(char **argument_list, int *size)
+bool	are_args_valid(char **argument_list, int *size)
 {
 	int	i;
 

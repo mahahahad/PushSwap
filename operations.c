@@ -6,7 +6,7 @@
 /*   By: maabdull <maabdull@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/27 11:31:01 by maabdull          #+#    #+#             */
-/*   Updated: 2024/01/16 11:38:45 by maabdull         ###   ########.fr       */
+/*   Updated: 2024/01/22 17:23:38 by maabdull         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,14 @@
 
 // Swap
 // Swap the first two numbers from the stack
-t_list	 *sa(t_list *head)
+t_list	*sa(t_list *head)
 {
 	int	data;
 
 	data = head->data;
 	head->data = head->next->data;
 	head->next->data = data;
-	printf("sa\n");
+	ft_putendl_fd("sa", 1);
 	return (head);
 }
 
@@ -33,14 +33,14 @@ void	swap(t_list **head)
 	(*head)->data = (*head)->next->data;
 	(*head)->next->data = data;
 	if ((*head)->stack_name == 'A')
-		puts("sa");
+		ft_putendl_fd("sa", 1);
 	else
-		puts("sb");
+		ft_putendl_fd("sb", 1);
 }
 
 // Reverse Rotate
 // Move the bottom number from the stack to the top
-t_list	 *rra(t_list *head)
+t_list	*rra(t_list *head)
 {
 	int	data;
 
@@ -53,7 +53,7 @@ t_list	 *rra(t_list *head)
 		head = head->prev;
 	}
 	head->data = data;
-	printf("rra\n");
+	ft_putendl_fd("rra", 1);
 	return (head);
 }
 
@@ -72,7 +72,7 @@ void	ra(t_list **stack_head)
 	temp->prev = head;
 	temp->next = NULL;
 	head->next = temp;
-	printf("ra\n");
+	ft_putendl_fd("ra", 1);
 }
 
 static t_list	*push_to_stack(t_list *head, t_list *node)
@@ -97,14 +97,13 @@ void	push(t_list **first_stack, t_list **second_stack)
 	temp->prev = NULL;
 	if (temp->stack_name == 'A')
 	{
-		puts("pb");
+		ft_putendl_fd("pb", 1);
 		temp->stack_name = 'B';
 	}
 	else
 	{
-		puts("pa");
+		ft_putendl_fd("pa", 1);
 		temp->stack_name = 'A';
 	}
 	*second_stack = push_to_stack(*second_stack, temp);
 }
-

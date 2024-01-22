@@ -6,20 +6,12 @@
 /*   By: maabdull <maabdull@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 13:07:13 by maabdull          #+#    #+#             */
-/*   Updated: 2024/01/22 17:01:37 by maabdull         ###   ########.fr       */
+/*   Updated: 2024/01/22 17:20:54 by maabdull         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "debug.c"
 #include "push_swap.h"
-
-// void	print_arr(const char **arr, int len)
-// {
-// 	for (int i = 1; i < len; ++i)
-// 	{
-// 		print_str(arr[i]);
-// 		print_str(" ");
-// 	}
-// }
 
 t_list	*append_to_node(t_list *head, t_list *node)
 {
@@ -48,18 +40,6 @@ t_list	*create_node(int num, int rank)
 	new->stack_name = 'A';
 	return (new);
 }
-
-// void	print_list(t_list *head)
-// {
-// 	while (head)
-// 	{
-// 		printf("%d", head->data);
-// 		if (head->next)
-// 			printf(", ");
-// 		head = head->next;
-// 	}
-// 	puts("");
-// }
 
 bool	is_sorted(t_list *head, t_list *head_b)
 {
@@ -137,21 +117,6 @@ int	*compare(int *arr_sorted, int *arr, int size, int *max)
 	*max = highest;
 	return (ranks);
 }
-
-// void	print_int_arr(int *arr, int size)
-// {
-// 	int	i;
-
-// 	i = 0;
-// 	while (i < size)
-// 	{
-// 		printf("%d", arr[i]);
-// 		if (i + 1 != size)
-// 			printf(", ");
-// 		i++;
-// 	}
-// 	puts("");
-// }
 
 int	*sort_arr(char **arg_list, int size, int *max)
 {
@@ -298,7 +263,7 @@ int	main(int argc, char const *argv[])
 	}
 	argument_list = ft_split(arguments, ' ');
 	if (!are_args_valid(argument_list, &size))
-		return (ft_putstr_fd("Error\n", 2), 1);
+		return (ft_putendl_fd("Error", 2), 1);
 	x = -1;
 	ranks = sort_arr(argument_list, size, &max);
 	// print_int_arr(ranks, size);
@@ -315,6 +280,6 @@ int	main(int argc, char const *argv[])
 		sort_five(&stack_a, &stack_b);
 	else
 		sort_radix(&stack_a, &stack_b, size, max);
-	// print_list(stack_a);
+	print_list(stack_a);
 	return (0);
 }
