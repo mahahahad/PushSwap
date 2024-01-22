@@ -6,139 +6,20 @@
 /*   By: maabdull <maabdull@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 13:07:13 by maabdull          #+#    #+#             */
-/*   Updated: 2024/01/22 16:51:33 by maabdull         ###   ########.fr       */
+/*   Updated: 2024/01/22 17:01:37 by maabdull         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void	print_str(const char *str)
-{
-	int	i;
-
-	i = 0;
-	while (str[i])
-		write(1, &str[i++], 1);
-	write(1, "\n", 1);
-}
-
-void	print_arr(const char **arr, int len)
-{
-	for (int i = 1; i < len; ++i)
-	{
-		print_str(arr[i]);
-		print_str(" ");
-	}
-}
-
-// Remove unnecessary values from the number such as leading zeros and signs
-// Return the extracted number or NULL if invalid number is passed
-static char	*extract_num(char *num)
-{
-	int		i;
-	int		j;
-	int		digit_found;
-	char	*val;
-
-	i = -1;
-	j = 0;
-	digit_found = 0;
-	// TODO: Free this wherever called
-	val = malloc(ft_strlen(num) + 1);
-	while (num[++i])
-	{
-		if ((num[i] == '0' && num[i + 1] != '\0') && !digit_found)
-			continue ;
-		if (num[i] == '-' && !digit_found)
-		{
-			val[j++] = num[i];
-			continue ;
-		}
-		if ((num[i] == '+' || num[i] == '-') && digit_found)
-			return (NULL);
-		digit_found = 1;
-		val[j++] = num[i];
-	}
-	if (!digit_found)
-		return (NULL);
-	return (val);
-}
-
-// Checks if the provided number is greater than INT_MAX
-// Uses strcmp and strlen to check if the number is 10 characters long and the difference from strcmp is greater than 1
-static bool	is_long(char *num)
-{
-	char	*max_int;
-	int		res;
-
-	if (num[0] == '-')
-		max_int = "-2147483648";
-	else
-		max_int = "2147483647";
-	res = ft_strcmp(num, max_int);
-	if ((res > 0 && ft_strlen(num) == 10) || (num[0] == '-'
-			&& ft_strlen(num) > 11) || (num[0] != '-' && ft_strlen(num) > 10))
-		return (true);
-	return (false);
-}
-
-// Loops through the (string) array and compares the provided (string) num.
-// If they are the same, return 1
-static bool	is_duplicate_string(char *num, char **arg_list)
-{
-	int	i;
-	int	instances_found;
-
-	i = 0;
-	instances_found = 0;
-	while (arg_list[i])
-	{
-		if (ft_strcmp(num, arg_list[i]) == 0)
-		{
-			if (instances_found >= 1)
-				return (true);
-			else
-				instances_found++;
-		}
-		i++;
-	}
-	return (false);
-}
-
-static bool	extract_num_list(char **arg_list)
-{
-	int	i;
-
-	i = -1;
-	// TODO: Leaks
-	while (arg_list[++i])
-	{
-		arg_list[i] = extract_num(arg_list[i]);
-		if (arg_list[i] == NULL)
-			return (false);
-	}
-	return (true);
-}
-
-// Checks the arguments that are still in string format if they are valid and not duplicates
-// Makes it easier for passing to atoi
-static bool	are_args_valid(char **argument_list, int *size)
-{
-	int	i;
-
-	i = 0;
-	if (!extract_num_list(argument_list))
-		return (false);
-	while (argument_list[i])
-	{
-		if (is_long(argument_list[i]) || is_duplicate_string(argument_list[i],
-				argument_list))
-			return (false);
-		i++;
-	}
-	*size = i;
-	return (true);
-}
+// void	print_arr(const char **arr, int len)
+// {
+// 	for (int i = 1; i < len; ++i)
+// 	{
+// 		print_str(arr[i]);
+// 		print_str(" ");
+// 	}
+// }
 
 t_list	*append_to_node(t_list *head, t_list *node)
 {
@@ -165,21 +46,20 @@ t_list	*create_node(int num, int rank)
 	new->rank = rank;
 	new->data = num;
 	new->stack_name = 'A';
-	// printf("\nCreated node: %d, rank = %d\n", new->data, new->rank);
 	return (new);
 }
 
-void	print_list(t_list *head)
-{
-	while (head)
-	{
-		printf("%d", head->data);
-		if (head->next)
-			printf(", ");
-		head = head->next;
-	}
-	puts("");
-}
+// void	print_list(t_list *head)
+// {
+// 	while (head)
+// 	{
+// 		printf("%d", head->data);
+// 		if (head->next)
+// 			printf(", ");
+// 		head = head->next;
+// 	}
+// 	puts("");
+// }
 
 bool	is_sorted(t_list *head, t_list *head_b)
 {
@@ -258,20 +138,20 @@ int	*compare(int *arr_sorted, int *arr, int size, int *max)
 	return (ranks);
 }
 
-void	print_int_arr(int *arr, int size)
-{
-	int	i;
+// void	print_int_arr(int *arr, int size)
+// {
+// 	int	i;
 
-	i = 0;
-	while (i < size)
-	{
-		printf("%d", arr[i]);
-		if (i + 1 != size)
-			printf(", ");
-		i++;
-	}
-	puts("");
-}
+// 	i = 0;
+// 	while (i < size)
+// 	{
+// 		printf("%d", arr[i]);
+// 		if (i + 1 != size)
+// 			printf(", ");
+// 		i++;
+// 	}
+// 	puts("");
+// }
 
 int	*sort_arr(char **arg_list, int size, int *max)
 {
@@ -288,7 +168,6 @@ int	*sort_arr(char **arg_list, int size, int *max)
 		arr[i] = ft_atoi(arg_list[i]);
 		arr_copy[i] = ft_atoi(arg_list[i]);
 	}
-	// print_int_arr(arr, size);
 	i = 0;
 	while (i < size - 1)
 	{
@@ -302,7 +181,6 @@ int	*sort_arr(char **arg_list, int size, int *max)
 		else
 			i++;
 	}
-	// print_int_arr(arr, size);
 	arr = compare(arr, arr_copy, size, max);
 	return (arr);
 }
@@ -320,7 +198,7 @@ bool	is_stack_empty(t_list **stack)
 	return (true);
 }
 
-int	get_bits(int max)
+static int	get_bits(int max)
 {
 	int	bits;
 
@@ -358,56 +236,11 @@ t_list	**sort_radix(t_list **head_a, t_list **head_b, int size, int max)
 				shift++;
 			}
 		}
-		// if((*head_a)->data)
-		//	print_list(*head_a);
 	}
 	return (head_a);
 }
-// 1 2 3 5 4
-// 3 5 4 -> 3 4 5
-// 12345
-// 1 2 3 4 0
-// 3 4 0 -> 0 3 4
-// THIS IS THE TRICKY PART I THINK
-// THE NUMBERS FROM THE SECOND STACK ARE NOW SUPPOSED TO ENTER STACK A BUT
-// THEIR ORDER IS UNSURE. THEY CAN EITHER BE
-// - Top of the stack
-// - Bottom of the stack
-// - Somewhere in the middle
-/*
-	Started with: 1 2 3 4 0
-
-	Stack B: 2 1
-	Stack A: 0 3 4
-
-	Expected Order:
-	Stack B:  2 1
-				|
-	Stack A: 0 3 4
-	- You can push then swap (haha push_swap)
-
-	Stack B: 1
-	Stack A: 2 0 3 4 -> 0 2 3 4
-	- Push then swap again
-
-	Stack B:
-	Stack A: 1 0 2 3 4 -> 0 1 2 3 4
-*/
-
-/*
-	Started with: 2 1 3 4 0
-
-	Stack B: 1 2
-	Stack A: 0 3 4
-	- Push then swap
-
-	Stack B: 2
-	Stack A: 0 1 3 4
-	- You can reverse till you reach a number greater than the one in stack b,
-		push, and reverse till it is in order
-*/
-
-void	push_min(t_list **head_a, t_list **head_b)
+// Push the minimum value from the first stack to the second stack
+static void	push_min(t_list **head_a, t_list **head_b)
 {
 	while ((*head_a)->next)
 	{
@@ -421,74 +254,22 @@ void	push_min(t_list **head_a, t_list **head_b)
 }
 
 // Sorts a stack with EXACTLY TWO NUMBERS to be in descending order
-void	descend_sort(t_list **head)
+static void	descend_sort(t_list **head)
 {
 	if ((*head)->data < (*head)->next->data)
 		swap(head);
 }
-// 5 2 1 3 4
-//
+
 t_list	**sort_five(t_list **head_a, t_list **head_b)
 {
-	// int	i;
-	// i = 0;
-	// if (is_sorted((*head_a)->next, *head_b))
-	// 	ra(head_a);
-	// else
-	// {
 	push_min(head_a, head_b);
 	push_min(head_a, head_b);
 	descend_sort(head_b);
-	// print_list((*head_b));
-	// print_list((*head_a));
 	*head_a = sort_three(*head_a);
-	// print_list((*head_a));
 	push_all_to_a(head_a, head_b);
-	// while ((*head_b)->data > (*head_a)->data)
-	// {
-	// 	ra(head_a);
-	// 	i++;
-	// }
-	// push(head_b, head_a);
-	// while (i)
-	// {
-	// 	*head_a = rra(*head_a);
-	// 	i--;
-	// }
-	// while ((*head_b)->data > (*head_a)->data)
-	// {
-	// 	ra(head_a);
-	// 	i++;
-	// }
-	// push(head_b, head_a);
-	// while (i)
-	// {
-	// 	*head_a = rra(*head_a);
-	// 	i--;
-	// }
-	// print_list(*head_a);
-	// if ((*head_a)->data > (*head_a)->next->data)
-	// 	ra(head_a);
-	// }
 	return (head_a);
 }
 
-// 3, 2, 1
-// sa -> 2, 3, 1
-// rra -> 1, 2, 3
-
-// 3, 1, 2
-// ra -> 1, 2, 3
-
-// 1, 3, 2
-// sa -> 3, 1, 2
-// ra -> 1, 2, 3
-
-// 2, 3, 1
-// rra -> 1, 2, 3
-
-// 2, 1, 3
-// sa -> 1, 2, 3
 int	main(int argc, char const *argv[])
 {
 	int		i;

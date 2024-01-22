@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   sort_int_arr.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: maabdull <maabdull@student.42abudhabi.a    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/01/22 16:56:00 by maabdull          #+#    #+#             */
+/*   Updated: 2024/01/22 16:56:01 by maabdull         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -26,7 +38,7 @@ void  sort_arr(int arr[], int size)
 void    print_arr(int *arr, int size)
 {
     int i;
-    
+
     i = 0;
     while (i < size)
     {
@@ -46,7 +58,6 @@ int    main(void)
     int    copy[5];
     int rank[5];
 
-    // copy = malloc(5 * sizeof(int));
     for (i = 0; i < 5; i++)
         copy[i] = arr[i];
     puts("Original");
