@@ -6,16 +6,16 @@
 /*   By: maabdull <maabdull@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 13:07:13 by maabdull          #+#    #+#             */
-/*   Updated: 2024/01/22 17:20:54 by maabdull         ###   ########.fr       */
+/*   Updated: 2024/02/01 20:51:40 by maabdull         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "debug.c"
 #include "push_swap.h"
 
-t_list	*append_to_node(t_list *head, t_list *node)
+t_list *append_to_node(t_list *head, t_list *node)
 {
-	t_list	*temp;
+	t_list *temp;
 
 	if (!head)
 		return (node);
@@ -28,9 +28,9 @@ t_list	*append_to_node(t_list *head, t_list *node)
 	return (head);
 }
 
-t_list	*create_node(int num, int rank)
+t_list *create_node(int num, int rank)
 {
-	t_list	*new;
+	t_list *new;
 
 	new = (t_list *)malloc(sizeof(t_list));
 	new->next = NULL;
@@ -41,7 +41,7 @@ t_list	*create_node(int num, int rank)
 	return (new);
 }
 
-bool	is_sorted(t_list *head, t_list *head_b)
+bool is_sorted(t_list *head, t_list *head_b)
 {
 	if (head_b)
 		return (false);
@@ -54,11 +54,11 @@ bool	is_sorted(t_list *head, t_list *head_b)
 	return (true);
 }
 
-t_list	*sort_three(t_list *head)
+t_list *sort_three(t_list *head)
 {
-	int	first;
-	int	second;
-	int	third;
+	int first;
+	int second;
+	int third;
 
 	if (is_sorted(head, NULL))
 		return (head);
@@ -90,12 +90,12 @@ t_list	*sort_three(t_list *head)
 	return (head);
 }
 
-int	*compare(int *arr_sorted, int *arr, int size, int *max)
+int *compare(int *arr_sorted, int *arr, int size, int *max)
 {
-	int	i;
-	int	j;
-	int	*ranks;
-	int	highest;
+	int i;
+	int j;
+	int *ranks;
+	int highest;
 
 	i = 0;
 	j = 0;
@@ -118,12 +118,12 @@ int	*compare(int *arr_sorted, int *arr, int size, int *max)
 	return (ranks);
 }
 
-int	*sort_arr(char **arg_list, int size, int *max)
+int *sort_arr(char **arg_list, int size, int *max)
 {
-	int	i;
-	int	*arr;
-	int	*arr_copy;
-	int	temp;
+	int i;
+	int *arr;
+	int *arr_copy;
+	int temp;
 
 	i = -1;
 	arr = malloc(size * sizeof(int));
@@ -150,22 +150,22 @@ int	*sort_arr(char **arg_list, int size, int *max)
 	return (arr);
 }
 
-void	push_all_to_a(t_list **head_a, t_list **head_b)
+void push_all_to_a(t_list **head_a, t_list **head_b)
 {
 	while ((*head_b))
 		push(head_b, head_a);
 }
 
-bool	is_stack_empty(t_list **stack)
+bool is_stack_empty(t_list **stack)
 {
 	if ((*stack) != NULL)
 		return (false);
 	return (true);
 }
 
-static int	get_bits(int max)
+static int get_bits(int max)
 {
-	int	bits;
+	int bits;
 
 	bits = 0;
 	while (max)
@@ -176,11 +176,11 @@ static int	get_bits(int max)
 	return (bits);
 }
 
-t_list	**sort_radix(t_list **head_a, t_list **head_b, int size, int max)
+t_list **sort_radix(t_list **head_a, t_list **head_b, int size, int max)
 {
-	int	i;
-	int	shift;
-	int	shift_limit;
+	int i;
+	int shift;
+	int shift_limit;
 
 	i = 0;
 	shift = 0;
@@ -205,28 +205,29 @@ t_list	**sort_radix(t_list **head_a, t_list **head_b, int size, int max)
 	return (head_a);
 }
 // Push the minimum value from the first stack to the second stack
-static void	push_min(t_list **head_a, t_list **head_b)
+static void push_min(t_list **head_a, t_list **head_b)
 {
 	while ((*head_a)->next)
 	{
 		if ((*head_a)->rank == 0 || (*head_a)->rank == 1)
 		{
 			push(head_a, head_b);
-			break ;
+			break;
 		}
 		ra(head_a);
 	}
 }
 
 // Sorts a stack with EXACTLY TWO NUMBERS to be in descending order
-static void	descend_sort(t_list **head)
+static void descend_sort(t_list **head)
 {
 	if ((*head)->data < (*head)->next->data)
 		swap(head);
 }
 
-t_list	**sort_five(t_list **head_a, t_list **head_b)
+t_list **sort_five(t_list **head_a, t_list **head_b)
 {
+	// THIS CAUSES ISSUES WHEN 4 DIGITS ARE PASSED
 	push_min(head_a, head_b);
 	push_min(head_a, head_b);
 	descend_sort(head_b);
@@ -235,17 +236,17 @@ t_list	**sort_five(t_list **head_a, t_list **head_b)
 	return (head_a);
 }
 
-int	main(int argc, char const *argv[])
+int main(int argc, char const *argv[])
 {
-	int		i;
-	char	*arguments;
-	char	**argument_list;
-	int		x;
-	t_list	*stack_a;
-	t_list	*stack_b;
-	int		size;
-	int		*ranks;
-	int		max;
+	int i;
+	char *arguments;
+	char **argument_list;
+	int x;
+	t_list *stack_a;
+	t_list *stack_b;
+	int size;
+	int *ranks;
+	int max;
 
 	stack_a = NULL;
 	stack_b = NULL;
@@ -269,7 +270,7 @@ int	main(int argc, char const *argv[])
 	// print_int_arr(ranks, size);
 	while (argument_list[++x])
 		stack_a = append_to_node(stack_a, create_node(ft_atoi(argument_list[x]),
-				ranks[x]));
+													  ranks[x]));
 	if (is_sorted(stack_a, stack_b))
 		return (0);
 	if (size == 2)

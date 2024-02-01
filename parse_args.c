@@ -6,7 +6,7 @@
 /*   By: maabdull <maabdull@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 16:59:51 by maabdull          #+#    #+#             */
-/*   Updated: 2024/01/22 17:18:18 by maabdull         ###   ########.fr       */
+/*   Updated: 2024/02/01 21:03:34 by maabdull         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,13 +29,17 @@ static char	*extract_num(char *num)
 	{
 		if ((num[i] == '0' && num[i + 1] != '\0') && !digit_found)
 			continue ;
-		if (num[i] == '-' && !digit_found)
+		if ((num[i] == '+' || num[i] == '-'))
 		{
-			val[j++] = num[i];
-			continue ;
+			if (!digit_found && i < 1 && num[i + 1])
+			{
+				val[j++] = num[i];
+				digit_found = 1;
+				continue ;
+			}
+			else
+				return (NULL);
 		}
-		if ((num[i] == '+' || num[i] == '-') && digit_found)
-			return (NULL);
 		digit_found = 1;
 		val[j++] = num[i];
 	}
@@ -105,7 +109,21 @@ static bool	extract_num_list(char **arg_list)
 bool	are_args_valid(char **argument_list, int *size)
 {
 	int	i;
+	int	j;
 
+	i = 0;
+	while (argument_list[i])
+	{
+		j = 0;
+		while (argument_list[i][j])
+		{
+			if (!ft_isdigit(argument_list[i][j]) && \
+				!ft_issign(argument_list[i][j]))
+				return (false);
+			j++;
+		}
+		i++;
+	}
 	i = 0;
 	if (!extract_num_list(argument_list))
 		return (false);
