@@ -6,21 +6,11 @@
 /*   By: maabdull <maabdull@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/04 13:13:21 by maabdull          #+#    #+#             */
-/*   Updated: 2023/07/20 12:36:00 by maabdull         ###   ########.fr       */
+/*   Updated: 2024/02/01 21:05:39 by maabdull         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-
-static int	ft_isspace(const char c)
-{
-	return ((c >= 9 && c <= 13) || c == ' ');
-}
-
-static int	ft_issign(const char c)
-{
-	return (c == '+' || c == '-');
-}
 
 /// @brief
 // Converts a number stored as a string to an integer type
