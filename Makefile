@@ -16,7 +16,7 @@ LIBFT = Libft/libft.a
 
 all : $(NAME)
 
-debug : CFLAGS += -g
+debug : CFLAGS += -g3 $(arg)
 debug : re
 
 $(NAME) : $(LIBFT)
@@ -34,4 +34,4 @@ fclean : clean
 
 re : fclean all
 
-.PHONY : all $(NAME) $(LIBFT) clean fclean re
+.PHONY : all $(NAME) $(LIBFT) clean fclean re debug

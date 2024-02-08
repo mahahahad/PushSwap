@@ -6,7 +6,7 @@
 /*   By: maabdull <maabdull@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 16:59:51 by maabdull          #+#    #+#             */
-/*   Updated: 2024/02/01 21:03:34 by maabdull         ###   ########.fr       */
+/*   Updated: 2024/02/05 23:43:26 by maabdull         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,6 +112,8 @@ bool	are_args_valid(char **argument_list, int *size)
 	int	j;
 
 	i = 0;
+	if (!argument_list || !argument_list[0])
+		return (NULL);
 	while (argument_list[i])
 	{
 		j = 0;

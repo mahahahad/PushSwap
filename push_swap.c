@@ -6,7 +6,7 @@
 /*   By: maabdull <maabdull@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 13:07:13 by maabdull          #+#    #+#             */
-/*   Updated: 2024/02/01 20:51:40 by maabdull         ###   ########.fr       */
+/*   Updated: 2024/02/08 12:05:28 by maabdull         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,11 +123,13 @@ int *sort_arr(char **arg_list, int size, int *max)
 	int i;
 	int *arr;
 	int *arr_copy;
+	int	*temp_arr;
 	int temp;
 
 	i = -1;
 	arr = malloc(size * sizeof(int));
 	arr_copy = malloc(size * sizeof(int));
+	temp_arr = NULL;
 	while (arg_list[++i])
 	{
 		arr[i] = ft_atoi(arg_list[i]);
@@ -146,7 +148,10 @@ int *sort_arr(char **arg_list, int size, int *max)
 		else
 			i++;
 	}
+	temp_arr = arr;
 	arr = compare(arr, arr_copy, size, max);
+	free(temp_arr);
+	free(arr_copy);
 	return (arr);
 }
 
@@ -236,41 +241,74 @@ t_list **sort_five(t_list **head_a, t_list **head_b)
 	return (head_a);
 }
 
-int main(int argc, char const *argv[])
+// Join all arguments separated by spaces
+char	*join_args(const char *argv[])
 {
-	int i;
-	char *arguments;
-	char **argument_list;
-	int x;
-	t_list *stack_a;
-	t_list *stack_b;
-	int size;
-	int *ranks;
-	int max;
+	int		i;
+	char	*arguments;
+	char	*temp;
 
-	stack_a = NULL;
-	stack_b = NULL;
-	ranks = NULL;
-	arguments = malloc(1);
 	i = 1;
-	max = 0;
-	if (argc == 1)
-		return (0);
-	while (i < argc)
+	arguments = malloc(1);
+	temp = NULL;
+	while (argv[i])
 	{
-		// TODO: LEAKS
-		arguments = ft_strjoin(arguments, ft_strjoin(" ", argv[i]));
+		temp = arguments;
+		arguments = ft_strjoin(arguments, argv[i]);
+		free(temp);
 		i++;
 	}
-	argument_list = ft_split(arguments, ' ');
-	if (!are_args_valid(argument_list, &size))
-		return (ft_putendl_fd("Error", 2), 1);
+	temp = NULL;
+	return (arguments);
+}
+
+void free_arg_list(char **argument_list)
+{
+	int	i;
+
+	i = 0;
+	while (argument_list[i])
+	{
+		free(argument_list[i]);
+		argument_list[i++] = NULL;
+	}
+	free(argument_list);
+}
+
+int main(int argc, char const *argv[])
+{
+	char	*arguments;
+	char	**argument_list;
+	int 	max;
+	int 	*ranks;
+	int 	size;
+	int 	x;
+	t_list *stack_a;
+	t_list *stack_b;
+
+	arguments = NULL;
+	argument_list = NULL;
+	max = 0;
+	ranks = NULL;
+ 	size = 0;
 	x = -1;
+	stack_a = NULL;
+	stack_b = NULL;
+	if (argc == 1 || argc == 2)
+		return (0);
+	arguments = join_args(argv);
+	argument_list = ft_split(arguments, ' ');
+	free(arguments);
+	arguments = NULL;
+	if (!are_args_valid(argument_list, &size))
+		return (free_arg_list(argument_list), ft_putendl_fd("Error", 2), 1);
 	ranks = sort_arr(argument_list, size, &max);
 	// print_int_arr(ranks, size);
 	while (argument_list[++x])
 		stack_a = append_to_node(stack_a, create_node(ft_atoi(argument_list[x]),
 													  ranks[x]));
+	free(ranks);
+	free_arg_list(argument_list);
 	if (is_sorted(stack_a, stack_b))
 		return (0);
 	if (size == 2)

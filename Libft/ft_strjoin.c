@@ -6,7 +6,7 @@
 /*   By: maabdull <maabdull@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/04 16:00:08 by maabdull          #+#    #+#             */
-/*   Updated: 2023/07/20 12:56:50 by maabdull         ###   ########.fr       */
+/*   Updated: 2024/02/08 11:11:36 by maabdull         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,13 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	j = 0;
 	if (!s1 || !s2)
 		return (NULL);
-	final_str = malloc(ft_strlen(s1) + ft_strlen(s2) + 1);
+	final_str = malloc(ft_strlen(s1) + ft_strlen(s2) + 2);
 	if (!final_str)
 		return (NULL);
 	while (s1[++i])
 		final_str[i] = s1[i];
+	if (s1[i] == '\0')
+		final_str[i++] = ' ';
 	while (s2[j])
 		final_str[i++] = s2[j++];
 	final_str[i] = '\0';

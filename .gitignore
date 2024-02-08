@@ -1,4 +1,4 @@
 *.dSYM/
-./push_swap
+push_swap
 Libft/objects/
 Libft/libft.a
