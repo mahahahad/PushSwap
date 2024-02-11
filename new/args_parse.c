@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   args_parse.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: maabdull <maabdull@student.42abudhabi.a    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/02/11 18:00:55 by maabdull          #+#    #+#             */
+/*   Updated: 2024/02/11 21:16:54 by maabdull         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../push_swap.h"
 
 // Joins two strings with a space in between
@@ -24,7 +36,8 @@ static char	*strjoin(char *s1, char *s2)
 	return (final_str);
 }
 
-char	*join_args(char *argv[])
+// Joins arguments separating them with a space
+static char	*join_args(char *argv[])
 {
 	int		i;
 	char	*joined_args;
@@ -60,9 +73,19 @@ void	free_args(char **arguments)
 }
 
 // Validates arguments by checking for non-integers and duplicates
-char	**validate_args(char **arguments)
+// Frees and exits if invalid arguments found
+void	validate_args(char **arguments)
 {
+	int		i;
 
+	i = 0;
+	while (arguments[i])
+	{
+		if (!extract_num(arguments[i]))
+			return (free_args(arguments), show_err());
+		i++;
+	}
+	check_long_dup_args(arguments);
 }
 
 // Converts arguments to array of strings
