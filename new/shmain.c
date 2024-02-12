@@ -6,7 +6,7 @@
 /*   By: maabdull <maabdull@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 18:00:32 by maabdull          #+#    #+#             */
-/*   Updated: 2024/02/11 21:22:10 by maabdull         ###   ########.fr       */
+/*   Updated: 2024/02/11 22:53:58 by maabdull         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	push_swap(t_list **stack_a, t_list **stack_b, int size)
 		return (0);
 	if (size == 2)
 		ra(stack_a);
-	if (size == 3)
+	else if (size == 3)
 		sort_three(stack_a);
 	else if (size <= 5)
 		sort_five(stack_a, stack_b, size);
@@ -51,6 +51,7 @@ int	main(int argc, char *argv[])
 	stack_a = create_stack(arguments, size);
 	free_args(arguments);
 	push_swap(&stack_a, &stack_b, size);
+	print_list(stack_a);
 	free_stack(stack_a);
 	return (0);
 }

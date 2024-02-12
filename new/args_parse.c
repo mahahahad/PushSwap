@@ -6,7 +6,7 @@
 /*   By: maabdull <maabdull@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 18:00:55 by maabdull          #+#    #+#             */
-/*   Updated: 2024/02/11 21:16:54 by maabdull         ###   ########.fr       */
+/*   Updated: 2024/02/12 12:08:40 by maabdull         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,13 +76,18 @@ void	free_args(char **arguments)
 // Frees and exits if invalid arguments found
 void	validate_args(char **arguments)
 {
+	char	*temp;
 	int		i;
 
 	i = 0;
+	temp = NULL;
 	while (arguments[i])
 	{
 		if (!extract_num(arguments[i]))
 			return (free_args(arguments), show_err());
+		temp = arguments[i];
+		arguments[i] = ft_itoa(ft_atoi(arguments[i]));
+		free(temp);
 		i++;
 	}
 	check_long_dup_args(arguments);
